@@ -1,0 +1,15 @@
+<p>
+	<label><%=l(:label_project_plural)%></label>
+	 	<%= select_tag 'settings[projects]',
+	        options_from_collection_for_select(Project.order("name"), :id, :name, @settings['projects']),
+	        :multiple => true,
+	        :size => 10 %>
+</p>
+<p>
+	<label><%=l(:"embedded_html.label_html_tag_plural")%></label>
+	 	<%= text_area_tag 'settings[html_tags]', settings['html_tags'] %>
+</p>
+<p>
+	<label><%=l(:"embedded_html.label_html_attr_plural")%></label>
+	 	<%= text_area_tag 'settings[html_attrs]', settings['html_attrs'] %>
+</p>
