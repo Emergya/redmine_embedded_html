@@ -8,6 +8,7 @@ Redmine::Plugin.register :redmine_embedded_html do
   author_url 'http://www.emergya.es'
 
   settings :default => { 
+    'projects' => [],
     'html_tags' => "strong,em,ins,del,cite,code,pre,ul,ol,li,h1,h2,h3,a,img,b,i,span,div,p,hr,br",
     'html_attrs' => "href,src,alt,class,style,rel,id,title"
     },
@@ -19,7 +20,7 @@ Redmine::Plugin.register :redmine_embedded_html do
       content = text || args 
       case obj.class.name
       when 'Issue', 'Journal'
-        if Setting.plugin_redmine_embedded_html['projects'].include?(obj.project.id.to_s)
+        if (Setting.plugin_redmine_embedded_html['projects'] || []).include?(obj.project.id.to_s)
           tags = Setting.plugin_redmine_embedded_html['html_tags'].present? ? Setting.plugin_redmine_embedded_html['html_tags'].split(',') : []
           attrs = Setting.plugin_redmine_embedded_html['html_attrs'].present? ? Setting.plugin_redmine_embedded_html['html_attrs'].split(',') : []
           return "#{ sanitize(CGI::unescapeHTML(content), {tags: tags, attributes: attrs}) }".html_safe
